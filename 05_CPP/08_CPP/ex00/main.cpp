@@ -9,7 +9,7 @@ using std::cerr; using std::cout; using std::endl;
 int	main() {
 
 	// Values to initialize vector
-	int	ini = 0; int end = 10;
+	int	ini = 33; int end = 128;
 
 	std::vector<int> vec;
 
@@ -17,15 +17,19 @@ int	main() {
 
 	for (int i = ini; i < end; i++) {
 		vec.push_back(i);
-		cout << i << (i < 9 ? ", " : " }");
+		cout << static_cast<char>(i) << (i <= end ? ", " : " }");
 	}
 
 	cout << RESET << endl;
 
-	int j;
+	char j;
 
 	cout << "\nSelect number to find in vector 🕵️‍♂️ : ";
-	while (!(std::cin >> j)) {		// Check for invalid input 
+	while (!(std::cin >> j)) {
+		if (std::cin.eof()) {
+			cout << "\n🔒 EOF signal (Ctrl+D) detected.\n";
+			return 1;
+		}
 		std::cin.clear();				// Clear the error flag
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');	//
 		cout << RED << "~Invalid input 🤬 " << RESET << "try to do better : ";
