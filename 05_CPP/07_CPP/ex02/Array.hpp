@@ -6,7 +6,7 @@
 /*   By: jumarque <jumarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:03:54 by jumarque          #+#    #+#             */
-/*   Updated: 2026/02/04 11:59:45 by jumarque         ###   ########.fr       */
+/*   Updated: 2026/03/05 20:19:51 by jumarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class Array {
 		Array(uint32_t numb);
 		Array(Array const &oth);
 		Array&	operator=(Array const &oth);
-		T&	operator[](uint32_t n);
+		T&	operator[](const uint32_t n);
 		uint32_t	size() const;
 		~Array();
 
