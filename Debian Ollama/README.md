@@ -1,7 +1,7 @@
 # 🚀 Ollama en Proxmox: Tu Laboratorio Local de LLMs (CPU-Only) 🧠
 
-![Ollama Logo](https://ollama.ai/public/ollama.svg)
-![Proxmox Logo](https://www.proxmox.com/images/logos/proxmox-ve-logo.svg)
+![Ollama Logo](https://ollama.com/public/ollama.png)
+![Proxmox Logo](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment#/media/File:Proxmox-VE-logo.svg)
 
 Este repositorio documenta los pasos para configurar una máquina virtual (VM) en **Proxmox VE** optimizada para ejecutar **Ollama** en modo **CPU-Only**. Ideal para quienes desean experimentar con Large Language Models (LLMs) localmente, aprovechando la virtualización y recursos como CPU y RAM de su servidor, sin necesidad de una GPU dedicada de alto rendimiento.
 
