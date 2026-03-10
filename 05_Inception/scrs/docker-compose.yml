@@ -2,14 +2,14 @@ services:
   nginx:
     container_name: nginx
     build: ./requirements/nginx
-#    depends_on:
+    depends_on:
 #      - adminer
-#      - redis
-#      - hugo
+      - redis
+ #     - hugo
     ports:
       - 443:443
     volumes:
-      - wordpress_data:/var/www/html
+      - /home/${USER}/Inception/data/wordpress:/var/www/html
     restart: always
     networks:
       - network
@@ -18,7 +18,7 @@ services:
     container_name: mariadb
     build: ./requirements/mariadb
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - /home/${USER}/Inception/data/mysql:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
@@ -38,7 +38,7 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress_data:/var/www/html
+      - /home/${USER}/Inception/data/wordpress:/var/www/html
     networks:
       - network
 
@@ -54,7 +54,7 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress_data:/var/www/html
+      - /home/${USER}/Inception/data/wordpress:/var/www/html
     networks:
       - network
 
@@ -65,7 +65,7 @@ services:
       - "21:21"
       - "21100-21110:21100-21110"
     volumes:
-      - "wordpress_data:/var/www/html"
+      - "/home/${USER}/Inception/data/wordpress:/var/www/html"
     networks:
       - network
     restart: always
@@ -96,20 +96,6 @@ services:
     restart: always
     networks:
       - network
-
-volumes:
-  mariadb_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/${USER}/Inception/data/mysql
-      o: bind
-  wordpress_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/${USER}/Inception/data/wordpress
-      o: bind
 
 networks:
   network:
