@@ -139,7 +139,7 @@
             cpuBar.style.width = "90%";
             
             try {
-                const response = await fetch('https://jumarque.42.fr/ollama/api/tags?nocache=' + Date.now());
+                const response = await fetch('/api/models');
                 if (!response.ok) throw new Error();
                 
                 const data = await response.json();
