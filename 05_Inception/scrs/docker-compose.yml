@@ -98,6 +98,15 @@ services:
     env_file:
       - .env
 
+  static_site:
+    container_name: static_site
+    build: ./requirements/bonus/static_site
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - network
+
 networks:
   network:
     driver: bridge
