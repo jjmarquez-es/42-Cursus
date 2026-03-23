@@ -1,6 +1,6 @@
 # Inception
 
-This project from 42 school aims to broaden your knowledge of system administration by using Docker. IIn this tutorial You will virtualize several Docker images, creating them in your new personal virtual machine. In this read.me you will have an inception tutorial to know how the project works.
+This project from 42 school by jumarque aims to broaden your knowledge of system administration by using Docker. IIn this tutorial You will virtualize several Docker images, creating them in your new personal virtual machine. In this read.me you will have an inception tutorial to know how the project works.
 
 ## Important things to read before beginning the project
 
@@ -8,7 +8,7 @@ This project from 42 school aims to broaden your knowledge of system administrat
 You will be lost and you will not understand properly how it works. Do it step by step.
 
 2. **Begin with Nginx** by displaying an index.html page 
-	- Learn first how to launch a docker image && to execute this image **without using docker-compose**
+	- Learn first how to launch a docker image && to execute this image **without using docker compose**
 	- Learn How to display an html page on http://localhost:80"
 	- Learn how to display an html page with SSL on http://localhost:443"
 
@@ -17,32 +17,28 @@ You will be lost and you will not understand properly how it works. Do it step b
 
 4. **Finish with MariaDB.**
 
-You want to try if each container works in general? No worries, you will be able to do it by importing images for wordpress and mariaDB from the hub. (if you read this for the first time, I invite you to begin to read this beautiful READ.ME and put a star on it! It helps!)
-
-- The 2 github which helped me a lot for the project : [llescure](https://github.com/llescure/42_Inception) and [malatini](https://github.com/42cursus/inception)
-- This github which helped me for the bonus [twagger](https://github.com/twagger/inception)  
-
-If you have questions: please contact me, I will be glad to give you an answer ! my discord username: vbachele#7949
+You want to try if each container works in general? No worries, you will be able to do it by importing images for wordpress and mariaDB from the hub.
 
 # SUMMARY
 
-### 1. [DEFINITIONS]
-### 2. [DOCKER]
-### 3. [NGINX]
-### 4. [WORDPRESS]
-### 4. [MARIADB]
-### 5. [BONUS]
-- [REDIS]
-- [FTP-server]
-- [Adminer]
-- [Service of my choice (Ollama)]
+### 1. [DEFINITIONS](#definition)
+### 2. [DOCKER](#docker)
+### 3. [NGINX](#nginx)
+### 4. [WORDPRESS](#wordpress)
+### 4. [MARIADB](#mariadb)
+### 5. [BONUS](#bonus)
+- [REDIS](#redis)
+- [FTP-server](#ftp-server)
+- [Adminer](#adminer)
+- [STATIC SITE](#-static-site-monitoring-dashboard)
+- [Service of my choice (Ollama)](#service-of-my-choice-ollama)
 
 # Definitions
 ## What is a docker ?
 Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.
 Docker provides the ability to package and run an application in a loosely isolated environment called a container.
 
-## What is a docker-compose ?
+## What is a docker compose ?
 [What is docker in general](https://www.educative.io/blog/docker-compose-tutorial)
 [What is docker network](https://www.aquasec.com/cloud-native-academy/docker-container/docker-networking/)
 Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services. Then, with a single command, you create and start all the services from your configuration.
@@ -50,7 +46,7 @@ Compose is a tool for defining and running multi-container Docker applications. 
 ## What is a docker-file ?
 Docker can build images automatically by reading the instructions from a Dockerfile. A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble an image. Using docker build users can create an automated build that executes several command-line instructions in succession.
 
-## How to install docker on MACOS
+## How to install docker on LINUX
 For this project, I am on my personal computer so I don't need to use the virtual machine to use a sudo command.
 I had to install docker. First, you need:
 - I went directly to the docker website and I downloaded docker [Link to the website](https://docs.docker.com/desktop/install/mac-install/)
@@ -85,7 +81,7 @@ sudo service mysql stop
 
 ```c
 - docker run "name of the docker image" //to run the docker image
-- docker run -d, // run container in background
+- docker run -d, // run container 7in background
 - docker run -p,// publish a container's port to the host
 - docker run -P, // publish all exposed port to random ports
 - docker run -it "imageName", //le programme continuera de fonctionner et on pourra interagir avec le container
@@ -378,11 +374,11 @@ Replace phpMyAdmin with Adminer and you will get a tidier user interface, better
 	- Move your conf file in the php-fpm.d directory
 
 2. **Create a www.conf file**
-	- You need to add the listen port (*in my case the 9000*)
+	- You need to add the listen port (*in my case the 8080*)
 	- Add the listen owner and listen group *(in my case : www-data)*
 
 3. **Modify the nginx.conf file**
-	- You need to add in your nginx.conf a rule to listen the adminer on the port 9000.
+	- You need to add in your nginx.conf a rule to listen the adminer on the port 8080.
 	- It will check if the index.php exist
 
 4. **Modify your docker-compose.yml**
@@ -399,6 +395,7 @@ Replace phpMyAdmin with Adminer and you will get a tidier user interface, better
    Ollama is an open-soucer tool for running large language models (LLMs) locally on your machine. It simplifies the process of downloading, managing, and interacting with AI models via a simple command-line interface or API, enabling local infarence without needing complex infrastructure setup.
 
 ### How to set up ollama?
+
 1. **Modify the docker-compose file**
 
   ollama:
@@ -418,10 +415,10 @@ Replace phpMyAdmin with Adminer and you will get a tidier user interface, better
 2. **Create a dockerfile**
 FROM debian:bookworm
 
-# Basic config
+## Basic config
 ARG DEBIAN_FRONTEND=noninteractive
 
-# repor update and necesary app
+## repor update and necesary app
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         curl \
@@ -436,16 +433,24 @@ RUN apt-get update && \
 		zstd \
     && rm -rf /var/lib/apt/lists/*
 
-# install Ollama
+## install Ollama
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
-# Añadir usuario no root para seguridad (opcional)
+## add another user for security (opcional)
 RUN useradd -m ollama && chown -R ollama:ollama /usr/local/bin /home/ollama && mkdir -p /root/.ollama && chown -R root:ollama /root
 
-# port
+## port
 EXPOSE 11434
 
-# initialize
+## initialize
 ENTRYPOINT ["ollama", "serve"]
 
 
+### STATIC SITE (Monitoring Dashboard)
+A custom dashboard serving as a central monitoring hub. It is served by Nginx as a separate subdomain.
+
+Domain: https://static.jumarque.42.fr
+
+Features: Service health checks and an AI Monitor that lists active models from the Ollama container.
+
+Reference: html, javascript and css
