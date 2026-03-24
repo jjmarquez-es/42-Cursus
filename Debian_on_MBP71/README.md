@@ -127,3 +127,42 @@ Si usas **VS Code**, instala la extensión `42 Header` y configura tu login:
 ```
 
 ---
+#!/bin/bash
+
+# Script para reparar el Wi-Fi Broadcom (wl) en Debian/Ubuntu
+# Útil tras actualizaciones de Kernel en MacBook Pro
+
+VERSION_DRIVER="6.30.223.271"
+KERNEL_ACTUAL=$(uname -r)
+
+echo "--- Reparador de Wi-Fi para MacBook (Broadcom STA) ---"
+echo "Detectado Kernel: $KERNEL_ACTUAL"
+
+# 1. Comprobar si el módulo ya está cargado
+if lsmod | grep -q "wl"; then
+    echo "[!] El módulo 'wl' ya está cargado. Reiniciando interfaz..."
+    sudo modprobe -r wl && sudo modprobe wl
+    exit 0
+fi
+
+echo "[...] Intentando cargar el módulo 'wl'..."
+if sudo modprobe wl 2>/dev/null; then
+    echo "[OK] Wi-Fi activado correctamente."
+else
+    echo "[!] Error: Módulo no encontrado. Iniciando compilación con DKMS..."
+    
+    # 2. Eliminar posibles conflictos
+    echo "[...] Eliminando drivers en conflicto (b43, bcma, ssb)..."
+    sudo modprobe -r b43 bcma ssb 2>/dev/null
+    
+    # 3. Forzar instalación en el kernel actual
+    echo "[...] Compilando driver para el kernel $KERNEL_ACTUAL..."
+    sudo dkms install -m broadcom-sta -v $VERSION_DRIVER -k $KERNEL_ACTUAL
+    
+    # 4. Intentar cargar de nuevo
+    if sudo modprobe wl; then
+        echo "[OK] ¡Wi-Fi reparado y funcionando!"
+    else
+        echo "[X] Error crítico: No se pudo cargar el driver. Revisa 'dmesg'."
+    fi
+fi
