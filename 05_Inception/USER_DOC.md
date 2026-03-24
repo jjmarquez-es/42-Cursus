@@ -75,6 +75,54 @@ docker compose -f ./scrs/docker-compose.yml logs -f
 This `Inception` environment stands out due to the integration of **Ollama** and **Redis**, offering an infrastructure that goes beyond basic web development to delve into system optimization and private AI deployment.
 
 ---
+In **Debian 12 (Bookworm)**, the `sudo` package is indeed not installed by default if you didn't set a root password during the installation process or if you chose a minimal setup.
+
+To allow a non-root user to manage Docker and perform administrative tasks, you must first switch to the actual **root** account to install the necessary tools.
+
+### 1. Switch to Root and Install Sudo
+Since you cannot use `sudo` yet, use the `su` (substitute user) command:
+
+```bash
+# Switch to the root user (you will be prompted for the root password)
+su -
+
+# Update the package list
+apt update
+
+# Install the sudo package
+apt install sudo -y
+```
+
+### 2. Add your user to the Sudo and Docker groups
+Once `sudo` is installed, you need to grant your user administrative permissions and Docker access:
+
+```bash
+# Add your user to the 'sudo' group
+usermod -aG sudo your_username
+
+# Add your user to the 'docker' group
+# (Create the group first if it doesn't exist)
+groupadd docker
+usermod -aG docker your_username
+```
+*Replace `your_username` with your actual login name.*
+
+### 3. Apply the changes
+For the system to recognize these new group memberships, you **must** log out and log back in, or restart the machine.
+
+---
+
+### Summary of Commands (Root Console)
+
+| Step | Command | Description |
+| :--- | :--- | :--- |
+| **Log in as Root** | `su -` | Required to perform initial setup. |
+| **Install Sudo** | `apt update && apt install sudo` | Installs the missing admin tool in Debian 12. |
+| **Group: Sudo** | `usermod -aG sudo $USER` | Allows the user to use the `sudo` command. |
+| **Group: Docker** | `usermod -aG docker $USER` | Allows the user to run containers without `sudo`. |
+
+> **Note on Debian 12:** If you are working on a 42 Virtual Machine, ensure you have enough disk space before proceeding, as we previously saw "No space left on device" errors. Installing packages and running Docker requires at least a few hundred MBs of free space.
+
 ---
 
 # 📁 USER_DOC.md - Inception Infrastructure (jumarque) ES Version
@@ -154,3 +202,47 @@ docker compose -f ./scrs/docker-compose.yml logs -f
 Este entorno `Inception` destaca por la integración de **Ollama** y **Redis**, ofreciendo una infraestructura que va más allá del desarrollo web básico para adentrarse en la optimización de sistemas y el despliegue de IA privada.
 
 ---
+En **Debian 12 (Bookworm)**, es muy común que el paquete `sudo` no venga instalado por defecto si configuraste una contraseña de root durante la instalación. Para solucionar esto y permitir que tu usuario gestione Docker sin ser root, debes seguir estos pasos desde la cuenta de **superusuario**.
+
+### 1. Entrar como Root e instalar `sudo`
+Como tu usuario aún no tiene permisos, primero debes transformarte en el administrador real usando el comando `su` (substitute user):
+
+```bash
+# Cambia al usuario root (te pedirá la contraseña de root)
+su -
+
+# Actualiza la lista de paquetes e instala sudo
+apt update && apt install sudo -y
+```
+
+### 2. Añadir tu usuario a los grupos `sudo` y `docker`
+Una vez instalado `sudo`, debes darte permisos administrativos y de gestión de contenedores. Sustituye `tu_usuario` por tu nombre de login real:
+
+```bash
+# Añade tu usuario al grupo 'sudo'
+usermod -aG sudo tu_usuario
+
+# Añade tu usuario al grupo 'docker'
+# (Crea el grupo primero por si acaso no existe)
+groupadd docker
+usermod -aG docker tu_usuario
+```
+
+### 3. Aplicar los cambios
+Para que Debian reconozca que ahora perteneces a estos nuevos grupos, **debes cerrar sesión y volver a entrar** (o reiniciar la máquina).
+
+
+
+---
+
+### Resumen de comandos (Consola de Root)
+
+| Paso | Comando | Descripción |
+| :--- | :--- | :--- |
+| **Entrar como Root** | `su -` | Obligatorio para la configuración inicial. |
+| **Instalar Sudo** | `apt update && apt install sudo` | Instala la herramienta de administración en Debian 12. |
+| **Grupo Sudo** | `usermod -aG sudo $USER` | Permite al usuario usar el comando `sudo`. |
+| **Grupo Docker** | `usermod -aG docker $USER` | Permite ejecutar contenedores sin usar `sudo`. |
+
+> **Nota Crítica:** Recuerda este error "No space left on device". Instalar paquetes y gestionar Docker requiere espacio en disco. Si tu partición está al 100%, estos comandos podrían fallar al intentar escribir en `/var/lib/`.
+

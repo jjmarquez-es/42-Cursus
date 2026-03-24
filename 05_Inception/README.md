@@ -1,6 +1,6 @@
 # Inception
 
-This project from 42 school by jumarque aims to broaden your knowledge of system administration by using Docker. IIn this tutorial You will virtualize several Docker images, creating them in your new personal virtual machine. In this read.me you will have an inception tutorial to know how the project works.
+This project from 42 school by jumarque aims to broaden your knowledge of system administration by using Docker. In this tutorial You will virtualize several Docker images, creating them in your new personal virtual machine. In this README.md you will have an inception tutorial to know how the project works.
 
 ## Important things to read before beginning the project
 
@@ -49,13 +49,11 @@ Docker can build images automatically by reading the instructions from a Dockerf
 ## How to install docker on LINUX
 For this project, I am on my personal computer so I don't need to use the virtual machine to use a sudo command.
 I had to install docker. First, you need:
-- I went directly to the docker website and I downloaded docker [Link to the website](https://docs.docker.com/desktop/install/mac-install/)
+- I went directly to the docker website and I downloaded docker [Link to the website](<https://docs.docker.com/engine/install/debian/>)
 - I installed docker on the machine
 - I tested to run a dockerfile thanks to the command docker run hello-world
 
 ## Useful things to know about inception dockers and containers
-- On the mac, Apache service is installed by default. I deleted Apache from my computer to avoid any problem with nginx
-- If you are at 42 on their computer you should stop these services which are running by default
 ```c
 sudo service nginx stop
 sudo service mariadb stop
@@ -66,7 +64,7 @@ sudo service mysql stop
 # DOCKER
 
 ## Important commands to use docker
-- [Best practices for building containers](https://cloud.google.com/architecture/best-practices-for-building-containers)
+- [Best practices for building containers](<https://docs.docker.com/build/building/best-practices/>)
 
 ### General docker commands
 ```c
@@ -132,10 +130,10 @@ Nginx conf documents will be used to config our server and the right proxy conne
 ## configure .conf file on nginx
 ### useful nginx links
 - [location explanations](<https://www.digitalocean.com/community/tutorials/nginx-location-directive>)
-- [What is a proxy server](<https://www.varonis.com/fr/blog/serveur-proxy>)
+- [What is a proxy server](<https://learn.microsoft.com/en-us/microsoft-cloud/dev/dev-proxy/concepts/what-is-proxy>)
 - [All nginx definitions](<http://nginx.org/en/docs/http/ngx_http_core_module.html>)
 - [Nginx Command line](<https://www.nginx.com/resources/wiki/start/topics/tutorials/commandline/>)
-- [PID 1 signal handling && nginx](https://cloud.google.com/architecture/best-practices-for-building-containers#signal-handling)
+- [PID 1 signal handling && nginx](https://nginx.org/en/docs/control.html)
 - [What is TLS(in french)](https://en.wikipedia.org/wiki/Transport_Layer_Security)
 
 ### Listen && Location
@@ -222,8 +220,8 @@ In this section we have to create the Mariadb image and create 2 users.
 - [Import-export databases](https://www.interserver.net/tips/kb/import-export-databases-mysql-command-line/)  
 - [Create and give permissions to a user](https://www.daniloaz.com/en/how-to-create-a-user-in-mysql-mariadb-and-grant-permissions-on-a-specific-database/)  
 - [Why create /var/run/mysqld directory](http://cactogeek.free.fr/autres/DocumentationLinux-Windows/LinuxUbuntu/ProblemeMYSQL-mysqld.sockInexistant.pdf)  
-- [How to give all privileges for a user on a database](https://chartio.com/resources/tutorials/how-to-grant-all-privileges-on-a-database-in-mysql/)  
-- [How to import a data base](https://www.journaldunet.fr/web-tech/developpement/1202663-comment-importer-un-fichier-sql-dans-mysql-en-ligne-de-commande/)  
+- [How to give all privileges for a user on a database](https://www.atlassian.com/data/admin/how-to-grant-all-privileges-on-a-database-in-mysql)  
+- [How to import a data base](https://dev.mysql.com/doc/workbench/en/wb-admin-export-import.html)  
 
 ## MARIADB useful commands
 ```c
@@ -278,9 +276,8 @@ mysql -uroot -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < /usr/local/bin/wordpress.s
 
 ## REDIS
 ### Useful links
-- [What is redis works with wordpress and what is a cache](https://www.section.io/engineering-education/how-to-set-up-and-configure-redis-caching-for-wordpress/)  
-- [How to set up redis (english article)](https://www.vultr.com/docshow-to-setup-redis-caching-for-wordpress-with-ubuntu-20-04-and-nginx/)  
-- [how to set up redis(french article)](https://gaelbillon.com/installer-et-configurer-redis-pour-wordpress-en-5-minutes/)  
+- [What is redis works with wordpress and what is a cache](https://wp-rocket.me/wordpress-cache/redis-object-caching/)  
+- [How to set up redis (english article)](https://redis.io/docs/latest/operate/oss_and_stack/install/archive/install-redis/install-redis-on-linux/)  
 
 ### Definition
 Remote Dictionary Server (Redis) is an in-memory, persistent, key-value database known as a data structure server. One important factor that differentiates Redis from similar servers is its ability to store and manipulate high-level data types (common examples include lists, maps, sets, and sorted sets).
@@ -329,10 +326,10 @@ redis-server --protected-mode no // To set up redis when you launch your image
 
 ### Useful links
 *This is the most difficult of the bonus to do*
-- [What is an FTP server?](https://titanftp.com/2022/07/05/what-is-an-ftp-server/)  
+- [What is an FTP server?](https://en.wikipedia.org/wiki/FTP_server)  
 - [What is vstftpd](https://en.wikipedia.org/wiki/Vsftpd)  
-- [Install an ftp server with wordpress](http://praveen.kumar.in/2009/05/31setting-up-ftps-using-vsftpd-for-wordpress-plugins-auto-upgrade/)  
-- [Understand vstftpd.conf file (french version)](https://linux.developpez.com/vsftpd/)  
+- [Install an ftp server](https://reintech.io/blog/configure-secure-ftp-server-vsftpd-debian-12)  
+- [Understand vstftpd.conf file](https://linux.die.net/man/5/vsftpd.conf)  
 
 ### Definition
 An FTP Server, in the simplest of definitions, is a software application that enables the transfer of files from one computer to another. FTP (which stands for “File Transfer Protocol”) is a way to transfer files to any computer in the world that is connected to the Internet. For wordpress it allows to modify ealisy your files like the wordpress files or your code.

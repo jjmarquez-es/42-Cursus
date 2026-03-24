@@ -68,7 +68,7 @@ Each critical service has a `.sh` script responsible for transforming `.env` var
 ## 6. Advanced Bonus Service Configuration
 
 ### 6.1. FTP Server (vsftpd) Passive Mode
-The `ftp-server` allows external editing of WordPress files[cite: 1, 2].
+The `ftp-server` allows external editing of WordPress files.
 * **Network Isolation:** Port `21` for control and ports `21100-21110` for the data channel.
 * **Host Configuration:** These ports are mapped directly in `docker-compose.yml` for external clients like FileZilla.
 
@@ -80,11 +80,11 @@ The `ftp-server` allows external editing of WordPress files[cite: 1, 2].
 
 ## 7. Development Lifecycle (Makefile)
 The `Makefile` automates deep cleaning:
-* **`make all`**: Progressive build[cite: 6].
+* **`make all`**: Progressive build.
 * **`make clean`**: 
-    1.  `docker compose down --volumes --rmi all`[cite: 6].
-    2.  `docker system prune -a --force`[cite: 6].
-    3.  `sudo rm -rf data/` (Cleans physical host files)[cite: 6].
+    1.  `docker compose down --volumes --rmi all`.
+    2.  `docker system prune -a --force`.
+    3.  `sudo rm -rf data/` (Cleans physical host files).
 
 ---
 ---
@@ -330,7 +330,7 @@ Para finalizar el **`DEV_DOC.md`** con un nivel de detalle técnico superior, pr
 ## 12. Configuración Avanzada de Servicios Bonus
 
 ### 12.1. Servidor FTP (vsftpd) y Modo Pasivo
-El servicio `ftp-server` está diseñado para permitir la edición externa de los archivos de WordPress mapeados en `/var/www/html`[cite: 1, 2].
+El servicio `ftp-server` está diseñado para permitir la edición externa de los archivos de WordPress mapeados en `/var/www/html`.
 * **Aislamiento de Red:** Utiliza el puerto `21` para el canal de control y un rango definido de puertos (`21100-21110`) para el canal de datos.
 * **Configuración del Host:** Estos puertos están mapeados directamente al host en el `docker-compose.yml` para permitir la conexión desde clientes externos como FileZilla.
 * **Persistencia Compartida:** El volumen se sincroniza con el contenedor `wordpress` y `nginx`, permitiendo que los cambios realizados vía FTP se reflejen instantáneamente en la web.
