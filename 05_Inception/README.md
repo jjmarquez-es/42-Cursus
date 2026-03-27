@@ -1,7 +1,3 @@
-Aquí tienes la información organizada, completada y estructurada siguiendo tus instrucciones. He mantenido la cabecera exacta, añadido introducciones contextuales, definiciones técnicas precisas y una sección de recursos centralizada al final para cada componente.
-
-***
-
 # Inception
 
 This project from 42 school by jumarque aims to broaden your knowledge of system administration by using Docker. In this tutorial You will virtualize several Docker images, creating them in your new personal virtual machine. In this README.md you will have an inception tutorial to know how the project works.
