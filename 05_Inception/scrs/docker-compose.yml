@@ -6,8 +6,9 @@ services:
       - adminer
     ports:
       - 443:443
+      - 80:80
     volumes:
-      - /home/${USER}/Inception/data/wordpress:/var/www/html
+      - wordpress_data:/var/www/html
     restart: always
     networks:
       - network
@@ -16,7 +17,7 @@ services:
     container_name: mariadb
     build: ./requirements/mariadb
     volumes:
-      - /home/${USER}/Inception/data/mysql:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
@@ -36,7 +37,7 @@ services:
     env_file:
       - .env
     volumes:
-      - /home/${USER}/Inception/data/wordpress:/var/www/html
+      - wordpress_data:/var/www/html
     networks:
       - network
 
@@ -61,7 +62,7 @@ services:
       - "21:21"
       - "21100-21110:21100-21110"
     volumes:
-      - "/home/${USER}/Inception/data/wordpress:/var/www/html"
+      - "wordpress_data:/var/www/html"
     networks:
       - network
     restart: always
@@ -87,11 +88,13 @@ services:
   ollama:
     build: requirements/bonus/ollama
     container_name: ollama-ai
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     ports:
       - "11434:11434"
     volumes:
-      - /home/${USER}/Inception/data/ollama:/root/.ollama
-      - /home/${USER}/Inception/data/models:/models
+      - "ollama_data:/root/.ollama"
     restart: unless-stopped
     networks:
       - network
@@ -106,6 +109,28 @@ services:
       - .env
     networks:
       - network
+
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/${USER}/data/mariadb_data'
+
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/${USER}/data/wordpress_data'
+
+  ollama_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o:  'bind'
+      device: '/home/${USER}/data/ollama_data'
 
 networks:
   network:

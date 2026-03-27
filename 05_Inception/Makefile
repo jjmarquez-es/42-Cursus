@@ -1,4 +1,5 @@
 all:
+	@mkdir -p data/mariadb_data; mkdir -p data/wordpress_data; mkdir -p data/ollama_data
 	@docker compose -f ./scrs/docker-compose.yml up -d --build
 
 down:
@@ -18,8 +19,8 @@ clean:
 	@if [ -n "$$(docker network ls --filter "type=custom" -q)" ]; then \
 		docker network rm $$(docker network ls --filter "type=custom" -q); \
 	fi
-	@sudo rm -rf data/mysql/*
-	@sudo rm -rf data/wordpress/*
-	@sudo rm -rf data/ollama/*
+	@sudo rm -rf data/mariadb_data/*
+	@sudo rm -rf data/wordpress_data/*
+	@sudo rm -rf data/ollama_data/*
 
 .PHONY: all re down clean
